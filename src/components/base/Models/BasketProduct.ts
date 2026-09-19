@@ -1,4 +1,4 @@
-import {IProduct} from '../../../types/index'
+import { IProduct } from "../../../types/index";
 
 export class BasketProduct {
   private _items: IProduct[];
@@ -7,7 +7,7 @@ export class BasketProduct {
     this._items = [];
   }
 
-   /** Добавляет полученный товар в массив корзины */
+  /** Добавляет полученный товар в массив корзины */
   add(item: IProduct): void {
     this._items.push(item);
   }

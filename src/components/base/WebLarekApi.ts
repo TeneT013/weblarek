@@ -1,5 +1,10 @@
-import { Api} from './Api'
-import { IProduct, IOrderRequest, IOrderResult, IProductListResponse } from '../../types/index'
+import { Api } from "./Api";
+import {
+  IProduct,
+  IOrderRequest,
+  IOrderResult,
+  IProductListResponse,
+} from "../../types/index";
 
 export class WebLarekApi {
   private _api: Api;
@@ -12,16 +17,16 @@ export class WebLarekApi {
 
   /** Запрос массива товаров с сервера */
   getProductList(): Promise<IProduct[]> {
-    return this._api.get<IProductListResponse>('/product').then((data) =>
+    return this._api.get<IProductListResponse>("/product").then((data) =>
       data.items.map((item) => ({
         ...item,
         image: this._cdn + item.image,
-      }))
+      })),
     );
   }
 
   /** Отправка данных о заказе на сервер */
   orderProducts(order: IOrderRequest): Promise<IOrderResult> {
-    return this._api.post<IOrderResult>('/order', order);
+    return this._api.post<IOrderResult>("/order", order);
   }
 }

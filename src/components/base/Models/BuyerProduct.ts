@@ -1,4 +1,4 @@
-import {TPayment, IBuyer} from '../../../types/index'
+import { TPayment, IBuyer } from "../../../types/index";
 
 export class BuyerProduct {
   private _payment: TPayment;
@@ -7,10 +7,10 @@ export class BuyerProduct {
   private _email: string;
 
   constructor() {
-    this._payment = '';
-    this._address = '';
-    this._phone = '';
-    this._email = '';
+    this._payment = "";
+    this._address = "";
+    this._phone = "";
+    this._email = "";
   }
 
   /**
@@ -37,10 +37,10 @@ export class BuyerProduct {
 
   /** Сбрасывает все поля покупателя к исходным пустым значениям */
   clear(): void {
-    this._payment = '';
-    this._address = '';
-    this._phone = '';
-    this._email = '';
+    this._payment = "";
+    this._address = "";
+    this._phone = "";
+    this._email = "";
   }
 
   /**
@@ -52,16 +52,16 @@ export class BuyerProduct {
     const errors = {} as Record<keyof IBuyer, string>;
 
     if (!this._payment) {
-      errors.payment = 'Не выбран способ оплаты';
+      errors.payment = "Не выбран способ оплаты";
     }
     if (!this._address.trim()) {
-      errors.address = 'Необходимо указать адрес доставки';
+      errors.address = "Необходимо указать адрес доставки";
     }
     if (!this._email.trim()) {
-      errors.email = 'Укажите email';
+      errors.email = "Укажите email";
     }
     if (!this._phone.trim()) {
-      errors.phone = 'Укажите номер телефона';
+      errors.phone = "Укажите номер телефона";
     }
 
     return errors;
