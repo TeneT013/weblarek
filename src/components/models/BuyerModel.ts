@@ -1,7 +1,7 @@
-import { TPayment, IBuyer } from "../../../types/index";
+import { TPayment, IBuyer, TBuyerErrors } from "../../types/index";
 
-export class BuyerProduct {
-  private _payment: TPayment;
+export class BuyerModel {
+  private _payment: TPayment | "";
   private _address: string;
   private _phone: string;
   private _email: string;
@@ -48,8 +48,8 @@ export class BuyerProduct {
    * Возвращает объект, где ключи — имена полей с ошибкой,
    * а значения — текст ошибки. Если ошибок нет, возвращает пустой объект.
    */
-  validate(): Record<keyof IBuyer, string> {
-    const errors = {} as Record<keyof IBuyer, string>;
+  validate(): TBuyerErrors {
+    const errors : TBuyerErrors = {};
 
     if (!this._payment) {
       errors.payment = "Не выбран способ оплаты";

@@ -1,6 +1,6 @@
-import { IProduct } from "../../../types/index";
+import { IProduct } from "../../types/index";
 
-export class BasketProduct {
+export class BasketModel {
   private _items: IProduct[];
 
   constructor() {
@@ -38,7 +38,7 @@ export class BasketProduct {
   }
 
   /** Проверяет наличие товара в корзине по его id */
-  inBasket(id: string): boolean {
+  isInBasket(id: string): boolean {
     return this._items.some((item) => item.id === id);
   }
 }

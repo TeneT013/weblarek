@@ -1,3 +1,5 @@
+import { categoryMap } from "../utils/constants"
+
 export type ApiPostMethods = "POST" | "PUT" | "DELETE";
 
 export interface IApi {
@@ -9,26 +11,23 @@ export interface IApi {
   ): Promise<T>;
 }
 
-export type TCategory =
-  | "софт-скил"
-  | "другое"
-  | "дополнительное"
-  | "кнопка"
-  | "хард-скил";
+export type TCategory = keyof typeof categoryMap
 
 export interface IProduct {
   id: string;
   description: string;
   image: string;
   title: string;
-  category: TCategory | string;
+  category: TCategory;
   price: number | null;
 }
 
-export type TPayment = "card" | "cash" | "";
+export type TPayment = "card" | "cash";
+
+export type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
 
 export interface IBuyer {
-  payment: TPayment;
+  payment: TPayment | "";
   email: string;
   phone: string;
   address: string;

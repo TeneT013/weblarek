@@ -1,6 +1,6 @@
-import { IProduct } from "../../../types/index";
+import { IProduct } from "../../types/index";
 
-export class CatalogProduct {
+export class CatalogModel {
   private _items: IProduct[];
   private _preview: IProduct | null;
 
