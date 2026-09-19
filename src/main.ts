@@ -48,10 +48,7 @@ if (apiProducts.items[1] && apiProducts.items[2]) {
 
   // Удаление по ID
   basketModel.remove(apiProducts.items[1].id);
-  console.log(
-    "Товары в корзине после удаления по ID:",
-    basketModel.getItems(),
-  );
+  console.log("Товары в корзине после удаления по ID:", basketModel.getItems());
 }
 
 // Очистка корзины
@@ -140,9 +137,9 @@ appApi
     // Сохраняем полученный массив товаров в модель каталога
     const products = data.items.map((item) => ({
       ...item,
-      image: CDN_URL + item.image
+      image: CDN_URL + item.image,
     }));
-    catalogModel.setItems(products)
+    catalogModel.setItems(products);
     // Проверяем сохранённые данные в консоли
     console.group("--- Загрузка каталога с сервера ---");
     console.log("Товары из модели CatalogModel:", catalogModel.getItems());

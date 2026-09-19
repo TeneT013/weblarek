@@ -1,4 +1,4 @@
-import { categoryMap } from "../utils/constants"
+import { categoryMap } from "../utils/constants";
 
 export type ApiPostMethods = "POST" | "PUT" | "DELETE";
 
@@ -11,7 +11,7 @@ export interface IApi {
   ): Promise<T>;
 }
 
-export type TCategory = keyof typeof categoryMap
+export type TCategory = keyof typeof categoryMap;
 
 export interface IProduct {
   id: string;

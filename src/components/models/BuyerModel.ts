@@ -49,7 +49,7 @@ export class BuyerModel {
    * а значения — текст ошибки. Если ошибок нет, возвращает пустой объект.
    */
   validate(): TBuyerErrors {
-    const errors : TBuyerErrors = {};
+    const errors: TBuyerErrors = {};
 
     if (!this._payment) {
       errors.payment = "Не выбран способ оплаты";

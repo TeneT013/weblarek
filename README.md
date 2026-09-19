@@ -111,18 +111,31 @@ interface IProduct {
   category: TCategory;
   price: number | null;
 }
-```
 
-```typescript
-type TPayment = 'card' | 'cash' | '';
+type TPayment = 'card' | 'cash';
 
 type TBuyerErrors = Partial<Record<keyof IBuyer, string>>;
 
 interface IBuyer {
-  payment: TPayment;
+  payment: TPayment | '';
   email: string;
   phone: string;
   address: string;
+}
+
+interface IProductListResponse {
+  total: number;
+  items: IProduct[];
+}
+
+interface IOrderRequest extends IBuyer {
+  total: number;
+  items: string[];
+}
+
+interface IOrderResult {
+  id: string;
+  total: number;
 }
 ```
 

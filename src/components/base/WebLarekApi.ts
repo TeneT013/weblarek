@@ -8,14 +8,13 @@ import {
 export class WebLarekApi {
   private _api: IApi;
 
-
   constructor(api: IApi) {
     this._api = api;
   }
 
   /** Запрос массива товаров с сервера */
   getProductList(): Promise<IProductListResponse> {
-    return this._api.get<IProductListResponse>("/product")
+    return this._api.get<IProductListResponse>("/product");
   }
 
   /** Отправка данных о заказе на сервер */
