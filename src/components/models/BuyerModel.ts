@@ -1,12 +1,15 @@
 import { TPayment, IBuyer, TBuyerErrors } from "../../types/index";
+import { IEvents } from "../base/Events";
 
 export class BuyerModel {
   private _payment: TPayment | "";
   private _address: string;
   private _phone: string;
   private _email: string;
+  protected events: IEvents;
 
-  constructor() {
+  constructor(events: IEvents) {
+    this.events = events
     this._payment = "";
     this._address = "";
     this._phone = "";
@@ -23,6 +26,7 @@ export class BuyerModel {
     if (data.address !== undefined) this._address = data.address;
     if (data.phone !== undefined) this._phone = data.phone;
     if (data.email !== undefined) this._email = data.email;
+    this.events.emit('buyer:changed', this.getData())
   }
 
   /** Возвращает полный объект с текущими данными покупателя */
@@ -41,6 +45,7 @@ export class BuyerModel {
     this._address = "";
     this._phone = "";
     this._email = "";
+    this.events.emit('buyer:changed', this.getData());
   }
 
   /**

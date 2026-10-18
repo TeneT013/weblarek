@@ -12,10 +12,13 @@ export class WebLarekApi {
     this._api = api;
   }
 
-  /** Запрос массива товаров с сервера */
+  /** Запрос массива товаров с сервера (вернуть когда поднимут api) */
   getProductList(): Promise<IProductListResponse> {
     return this._api.get<IProductListResponse>("/product");
   }
+  
+
+
 
   /** Отправка данных о заказе на сервер */
   orderProducts(order: IOrderRequest): Promise<IOrderResult> {

@@ -1,10 +1,13 @@
 import { IProduct } from "../../types/index";
+import { IEvents } from "../base/Events";
 
 export class CatalogModel {
   private _items: IProduct[];
   private _preview: IProduct | null;
+  protected events: IEvents;
 
-  constructor() {
+  constructor(events: IEvents) {
+    this.events = events
     this._items = [];
     this._preview = null;
   }
@@ -12,6 +15,7 @@ export class CatalogModel {
   /** Сохраняет полученный массив товаров в модель */
   setItems(items: IProduct[]): void {
     this._items = items;
+    this.events.emit('catalog:changed', { items: this._items });
   }
 
   /** Возвращает текущий массив товаров из модели */
@@ -27,6 +31,7 @@ export class CatalogModel {
   /** Сохраняет товар для детального отображения в модальном окне */
   setPreview(item: IProduct): void {
     this._preview = item;
+    this.events.emit('preview:changed', { preview: this._preview });
   }
 
   /** Возвращает товар, выбранный для подробного отображения */
