@@ -2,18 +2,18 @@ import { TPayment, IBuyer, TBuyerErrors } from "../../types/index";
 import { IEvents } from "../base/Events";
 
 export class BuyerModel {
-  private _payment: TPayment | "";
-  private _address: string;
-  private _phone: string;
-  private _email: string;
+  private payment: TPayment | "";
+  private address: string;
+  private phone: string;
+  private email: string;
   protected events: IEvents;
 
   constructor(events: IEvents) {
     this.events = events
-    this._payment = "";
-    this._address = "";
-    this._phone = "";
-    this._email = "";
+    this.payment = "";
+    this.address = "";
+    this.phone = "";
+    this.email = "";
   }
 
   /**
@@ -22,30 +22,30 @@ export class BuyerModel {
    * отдельные поля, не затрагивая остальные.
    */
   setData(data: Partial<IBuyer>): void {
-    if (data.payment !== undefined) this._payment = data.payment;
-    if (data.address !== undefined) this._address = data.address;
-    if (data.phone !== undefined) this._phone = data.phone;
-    if (data.email !== undefined) this._email = data.email;
-    this.events.emit('buyer:changed', this.getData())
+    if (data.payment !== undefined) this.payment = data.payment;
+    if (data.address !== undefined) this.address = data.address;
+    if (data.phone !== undefined) this.phone = data.phone;
+    if (data.email !== undefined) this.email = data.email;
+    this.events.emit('buyer:changed')
   }
 
   /** Возвращает полный объект с текущими данными покупателя */
   getData(): IBuyer {
     return {
-      payment: this._payment,
-      address: this._address,
-      phone: this._phone,
-      email: this._email,
+      payment: this.payment,
+      address: this.address,
+      phone: this.phone,
+      email: this.email,
     };
   }
 
   /** Сбрасывает все поля покупателя к исходным пустым значениям */
   clear(): void {
-    this._payment = "";
-    this._address = "";
-    this._phone = "";
-    this._email = "";
-    this.events.emit('buyer:changed', this.getData());
+    this.payment = "";
+    this.address = "";
+    this.phone = "";
+    this.email = "";
+    this.events.emit('buyer:changed');
   }
 
   /**
@@ -56,16 +56,16 @@ export class BuyerModel {
   validate(): TBuyerErrors {
     const errors: TBuyerErrors = {};
 
-    if (!this._payment) {
+    if (!this.payment) {
       errors.payment = "Не выбран способ оплаты";
     }
-    if (!this._address.trim()) {
+    if (!this.address.trim()) {
       errors.address = "Необходимо указать адрес доставки";
     }
-    if (!this._email.trim()) {
+    if (!this.email.trim()) {
       errors.email = "Укажите email";
     }
-    if (!this._phone.trim()) {
+    if (!this.phone.trim()) {
       errors.phone = "Укажите номер телефона";
     }
 

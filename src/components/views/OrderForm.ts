@@ -21,8 +21,6 @@ export class OrderForm extends Form<IOrderForm> {
         // Обработчики кликов по кнопкам выбора оплаты
         this.paymentButtons.forEach(button => {
             button.addEventListener('click', () => {
-                this.payment = button.name;
-                // Сообщаем презентеру об изменении поля payment
                 this.onInputChange('payment', button.name);
             });
         });

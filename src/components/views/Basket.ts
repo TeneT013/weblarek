@@ -5,6 +5,7 @@ import { ensureElement } from '../../utils/utils';
 export interface IBasketView {
     items: HTMLElement[];
     total: number;
+    buttonDisabled: boolean;
 }
 
 export class Basket extends Component<IBasketView> {
@@ -23,27 +24,16 @@ export class Basket extends Component<IBasketView> {
         this.buttonElement = ensureElement<HTMLButtonElement>('.basket__button', this.container);
 
         // Вешаем обработчик клика на кнопку перехода к оформлению заказа
-        if (this.buttonElement) {
             this.buttonElement.addEventListener('click', () => {
                 this.events.emit('order:open');
             });
-        }
     }
 
     /**
      * Обновляет список товаров в корзине.
-     * Если корзина пуста выводим заглушку («Корзина пуста»).
      */
     set items(items: HTMLElement[]) {
-        if (items.length) {
-            this.listElement.replaceChildren(...items);
-            this.setButtonDisabled(false);
-        } else {
-            const emptyElement = document.createElement('p');
-            emptyElement.textContent = 'Корзина пуста';
-            this.listElement.replaceChildren(emptyElement);
-            this.setButtonDisabled(true);
-        }
+        this.listElement.replaceChildren(...items);
     }
 
     /**
@@ -56,9 +46,7 @@ export class Basket extends Component<IBasketView> {
     /**
      * Блокирует или разблокирует кнопку оформления заказа
      */
-    setButtonDisabled(value: boolean): void {
-        if (this.buttonElement) {
-            this.buttonElement.disabled = value;
-        }
+    set buttonDisabled(value: boolean) {
+        this.buttonElement.disabled = value;
     }
 }

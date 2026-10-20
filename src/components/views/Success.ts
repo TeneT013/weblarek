@@ -1,5 +1,6 @@
 import { Component } from '../base/Component';
 import { ensureElement } from '../../utils/utils';
+import { IEvents } from '../base/Events';
 
 export interface ISuccess {
     total: number;
@@ -13,7 +14,7 @@ export class Success extends Component<ISuccess> {
     protected closeButton: HTMLButtonElement;
     protected totalElement: HTMLElement;
 
-    constructor(container: HTMLElement, actions: ISuccessActions) {
+    constructor(container: HTMLElement, protected events: IEvents) {
         super(container);
 
         // Находим кнопку закрытия и элемент для вывода суммы списанных средств
@@ -21,9 +22,9 @@ export class Success extends Component<ISuccess> {
         this.totalElement = ensureElement<HTMLElement>('.order-success__description', this.container);
 
         // Привязываем колбэк к клику по кнопке возврата в каталог
-        if (actions?.onClick && this.closeButton) {
-            this.closeButton.addEventListener('click', actions.onClick);
-        }
+            this.closeButton.addEventListener('click', () => {
+                this.events.emit('success:close')
+            });
     }
 
     /**

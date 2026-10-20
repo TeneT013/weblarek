@@ -27,7 +27,7 @@ export class Modal extends Component<IModalData> {
   }
 
   // Сеттер protected: снаружи компонент обновляется только через render().
-  protected set content(value: HTMLElement) {
+  set content(value: HTMLElement) {
     this.contentElement.replaceChildren(value);
   }
 

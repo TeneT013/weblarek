@@ -22,11 +22,12 @@ export abstract class Form<T> extends Component<T & IFormState> {
 
         // Обработчик изменения полей ввода (инпутов)
         this.container.addEventListener('input', (event: Event) => {
-            const target = event.target as HTMLInputElement;
-            const field = target.name as keyof T;
-            const value = target.value;
+            const target = event.target;
 
-            if (field) {
+            // Cужаем тип цели события до HTMLInputElement
+            if (target instanceof HTMLInputElement) {
+                const field = target.name as keyof T;
+                const value = target.value;
                 this.onInputChange(field, value);
             }
         });
@@ -56,28 +57,10 @@ export abstract class Form<T> extends Component<T & IFormState> {
     }
 
     /**
-     * Выводит текст общей или полевой ошибки валидации
+     * Сеттер обработки и вывода ошибок валидации
      */
-    set errors(value: string) {
-        this.errorsElement.textContent = value;
-    }
-
-    /**
-     * Расширенный метод рендеринга для обновления состояния формы
-     */
-    render(state?: Partial<T & IFormState>): HTMLElement {
-        if (state) {
-            const { valid, errors, ...inputs } = state;
-            
-            if (errors !== undefined) {
-                this.errors = Array.isArray(errors) ? errors.join('; ') : errors;
-            }
-            if (valid !== undefined) {
-                this.valid = valid;
-            }
-
-            super.render(inputs as Partial<T & IFormState>);
-        }
-        return this.container;
+    set errors(value: string | string[]) {
+        const errorString = Array.isArray(value) ? value.join('; ') : value;
+        this.errorsElement.textContent = errorString;
     }
 }

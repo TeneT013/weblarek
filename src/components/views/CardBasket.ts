@@ -17,7 +17,7 @@ export class CardBasket extends Card<ICardBasket> {
         this.deleteButton = ensureElement<HTMLButtonElement>('.card__button', this.container);
 
         // Если передан колбэк для удаления, вешаем его на кнопку удаления
-        if (actions?.onDelete && this.deleteButton) {
+        if (actions?.onDelete) {
             this.deleteButton.addEventListener('click', actions.onDelete);
         }
     }

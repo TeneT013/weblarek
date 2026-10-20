@@ -6,15 +6,15 @@ import {
 } from "../../types/index";
 
 export class WebLarekApi {
-  private _api: IApi;
+  private api: IApi;
 
   constructor(api: IApi) {
-    this._api = api;
+    this.api = api;
   }
 
   /** Запрос массива товаров с сервера (вернуть когда поднимут api) */
   getProductList(): Promise<IProductListResponse> {
-    return this._api.get<IProductListResponse>("/product");
+    return this.api.get<IProductListResponse>("/product");
   }
   
 
@@ -22,6 +22,6 @@ export class WebLarekApi {
 
   /** Отправка данных о заказе на сервер */
   orderProducts(order: IOrderRequest): Promise<IOrderResult> {
-    return this._api.post<IOrderResult>("/order", order);
+    return this.api.post<IOrderResult>("/order", order);
   }
 }
