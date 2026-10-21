@@ -22,7 +22,7 @@ export class OrderForm extends Form<IOrderForm> {
         // Обработчики кликов по кнопкам выбора оплаты
         this.paymentButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const value = button.name as TPayment
+                const value = button.name
                 if (value === 'card' || value === 'cash') {
                 this.onInputChange('payment', value);
                 }
