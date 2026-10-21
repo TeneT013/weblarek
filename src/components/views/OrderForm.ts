@@ -1,9 +1,10 @@
 import { Form } from './Form';
 import { IEvents } from '../base/Events';
 import { ensureElement, ensureAllElements } from '../../utils/utils';
+import type { IBuyer, TPayment } from '../../types';
 
 export interface IOrderForm {
-    payment: string;
+    payment: IBuyer['payment'];
     address: string;
 }
 
@@ -21,7 +22,10 @@ export class OrderForm extends Form<IOrderForm> {
         // Обработчики кликов по кнопкам выбора оплаты
         this.paymentButtons.forEach(button => {
             button.addEventListener('click', () => {
-                this.onInputChange('payment', button.name);
+                const value = button.name as TPayment
+                if (value === 'card' || value === 'cash') {
+                this.onInputChange('payment', value);
+                }
             });
         });
     }

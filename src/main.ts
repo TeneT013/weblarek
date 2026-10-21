@@ -4,6 +4,7 @@ import { API_URL, CDN_URL } from './utils/constants';
 import { Api } from './components/base/Api';
 import { ensureElement, cloneTemplate } from './utils/utils';
 import { EventEmitter } from './components/base/Events';
+import type { TPayment } from './types';
 
 // Модели
 import { CatalogModel } from './components/models/CatalogModel';
@@ -50,7 +51,7 @@ function renderBasket(): void {
     const items = basketModel.getItems();
     const basketItems = items.map((item, index) => {
         const card = new CardBasket(cloneTemplate<HTMLElement>('#card-basket'), {
-            onDelete: () => events.emit('basket-item:remove', { id: item.id })
+            onDelete: () => events.emit('basket-item:action', { id: item.id })
         });
         return card.render({ title: item.title, price: item.price, index: index + 1 });
     });
@@ -113,7 +114,6 @@ events.on('preview:changed', () => {
             buttonDisabled
         })
     });
-    modal.open();
 });
 
 events.on('card:action', () => {
@@ -137,32 +137,21 @@ events.on('basket:changed', () => {
 
 events.on('basket:open', () => {
     modal.render({ content: basketView.render() });
-    modal.open();
 });
 
-events.on('basket-item:remove', (data: { id: string }) => {
+events.on('basket-item:action', (data: { id: string }) => {
     basketModel.remove(data.id);
 });
 
 
 // 3. Управление оформлением заказа, формами и отправкой данных
 events.on('order:open', () => {
-    const data = buyerModel.getData();
-    const errors = buyerModel.validate();
-    const orderErrors = [errors.payment, errors.address].filter(Boolean);
-
     modal.render({
-        content: orderForm.render({ 
-            payment: data.payment, 
-            address: data.address, 
-            valid: orderErrors.length === 0, 
-            errors: orderErrors.join('; ') 
-        })
+        content: orderForm.render()
     });
-    modal.open();
 });
 
-events.on('order.payment:change', (data: { value: string }) => buyerModel.setData({ payment: data.value as any }));
+events.on('order.payment:change', (data: { value: TPayment }) => buyerModel.setData({ payment: data.value }));
 events.on('order.address:change', (data: { value: string }) => buyerModel.setData({ address: data.value }));
 events.on('contacts.email:change', (data: { value: string }) => buyerModel.setData({ email: data.value }));
 events.on('contacts.phone:change', (data: { value: string }) => buyerModel.setData({ phone: data.value }));
@@ -189,17 +178,8 @@ events.on('buyer:changed', () => {
 });
 
 events.on('order:submit', () => {
-    const data = buyerModel.getData();
-    const errors = buyerModel.validate();
-    const contactsErrors = [errors.email, errors.phone].filter(Boolean);
-
     modal.render({
-        content: contactsForm.render({ 
-            email: data.email, 
-            phone: data.phone, 
-            valid: contactsErrors.length === 0, 
-            errors: contactsErrors.join('; ') 
-        })
+        content: contactsForm.render()
     });
 });
 
